@@ -1,0 +1,4 @@
+
+before_compile:
+  - n 18.13.0
+  - npm ci
