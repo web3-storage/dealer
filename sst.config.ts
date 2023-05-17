@@ -1,6 +1,7 @@
 import { Tags } from 'aws-cdk-lib';
 import { SSTConfig } from 'sst';
 import { ApiStack } from './stacks/ApiStack';
+import { DataStack } from './stacks/DataStack';
 
 export default {
   config(_input) {
@@ -20,6 +21,7 @@ export default {
         sourcemap: true
       }
     })
+    app.stack(DataStack);
     app.stack(ApiStack);
 
     // tags let us discover all the aws resource costs incurred by this app
