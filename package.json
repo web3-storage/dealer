@@ -1,0 +1,33 @@
+{
+  "name": "spade-proxy",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "author": "Vasco Santos <santos.vasco10@gmail.com>",
+  "license": "Apache-2.0 OR MIT",
+  "scripts": {
+    "dev": "sst dev",
+    "build": "sst build",
+    "test": "echo \"no test\"",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/git-rev-sync": "^2.0.0",
+    "@types/node": "^20.1.7",
+    "sst": "^2.8.3",
+    "aws-cdk-lib": "2.72.1",
+    "constructs": "10.1.156",
+    "git-rev-sync": "^3.0.2",
+    "typescript": "^5.0.4",
+    "@tsconfig/node16": "^1.0.3"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "node-fetch": "^3.3.1"
+  }
+}
