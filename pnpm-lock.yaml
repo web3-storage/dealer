@@ -6,7 +6,7 @@ importers:
     specifiers:
       '@tsconfig/node16': ^1.0.3
       '@types/git-rev-sync': ^2.0.0
-      '@types/node': ^20.1.7
+      '@types/node': ^18.16.3
       aws-cdk-lib: 2.72.1
       constructs: 10.1.156
       git-rev-sync: ^3.0.2
@@ -18,7 +18,7 @@ importers:
     devDependencies:
       '@tsconfig/node16': 1.0.3
       '@types/git-rev-sync': 2.0.0
-      '@types/node': 20.1.7
+      '@types/node': 18.16.5
       aws-cdk-lib: 2.72.1_constructs@10.1.156
       constructs: 10.1.156
       git-rev-sync: 3.0.2
@@ -30,11 +30,13 @@ importers:
       '@types/aws-lambda': ^8.10.115
       '@types/node': ^18.16.3
       sst: ^2.8.3
+      typescript: ^5.0.4
       vitest: ^0.31.0
     devDependencies:
       '@types/aws-lambda': 8.10.115
       '@types/node': 18.16.5
-      sst: 2.8.7
+      sst: 2.8.7_typescript@5.0.4
+      typescript: 5.0.4
       vitest: 0.31.0
 
 packages:
@@ -2376,15 +2378,6 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /ansi-escapes/6.2.0:
-    resolution: {integrity: sha512-kzRaCqXnpzWs+3z5ABPQiVke+iq0KXkHo8xiWV4RPTi5Yli0l97BEQuhXV1s7+aSU/fu1kUuxgS4MsQ0fRuygw==}
-    engines: {node: '>=14.16'}
-    dependencies:
-      type-fest: 3.10.0
-    transitivePeerDependencies:
-      - typescript
-    dev: true
-
   /ansi-escapes/6.2.0_typescript@5.0.4:
     resolution: {integrity: sha512-kzRaCqXnpzWs+3z5ABPQiVke+iq0KXkHo8xiWV4RPTi5Yli0l97BEQuhXV1s7+aSU/fu1kUuxgS4MsQ0fRuygw==}
     engines: {node: '>=14.16'}
@@ -3941,50 +3934,6 @@ packages:
       - utf-8-validate
     dev: true
 
-  /ink/4.2.0_react@18.2.0:
-    resolution: {integrity: sha512-q7SeFAEFMyKxTblyVI+CsxHzfiMMP9JUDG0cRmOKEAmJiYrtrDW1YYTv129RXqfn7fMKcVc4h/LbAJvqvZIuEQ==}
-    engines: {node: '>=14.16'}
-    peerDependencies:
-      '@types/react': '>=18.0.0'
-      react: '>=18.0.0'
-      react-devtools-core: ^4.19.1
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      react-devtools-core:
-        optional: true
-    dependencies:
-      ansi-escapes: 6.2.0
-      auto-bind: 5.0.1
-      chalk: 5.2.0
-      cli-boxes: 3.0.0
-      cli-cursor: 4.0.0
-      cli-truncate: 3.1.0
-      code-excerpt: 4.0.0
-      indent-string: 5.0.0
-      is-ci: 3.0.1
-      is-lower-case: 2.0.2
-      is-upper-case: 2.0.2
-      lodash: 4.17.21
-      patch-console: 2.0.0
-      react: 18.2.0
-      react-reconciler: 0.29.0_react@18.2.0
-      scheduler: 0.23.0
-      signal-exit: 3.0.7
-      slice-ansi: 6.0.0
-      stack-utils: 2.0.6
-      string-width: 5.1.2
-      type-fest: 0.12.0
-      widest-line: 4.0.1
-      wrap-ansi: 8.1.0
-      ws: 8.13.0
-      yoga-wasm-web: 0.3.3
-    transitivePeerDependencies:
-      - bufferutil
-      - typescript
-      - utf-8-validate
-    dev: true
-
   /interpret/1.4.0:
     resolution: {integrity: sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==}
     engines: {node: '>= 0.10'}
@@ -5275,91 +5224,6 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /sst/2.8.7:
-    resolution: {integrity: sha512-oqti6tpws0pP+oyfN2A4Aw6K2EKMDT9cwgw2CjJykvRK87zEr+8uIsPphvQJViVr7v5n16Ly2l9KGhKD+nHpEA==}
-    hasBin: true
-    peerDependencies:
-      '@sls-next/lambda-at-edge': ^3.7.0
-    peerDependenciesMeta:
-      '@sls-next/lambda-at-edge':
-        optional: true
-    dependencies:
-      '@aws-cdk/aws-apigatewayv2-alpha': 2.72.1-alpha.0_mmet4fn7yah4brorskikwhrya4
-      '@aws-cdk/aws-apigatewayv2-authorizers-alpha': 2.72.1-alpha.0_pqn5m6e57bvoqxz3r5q7ubae2u
-      '@aws-cdk/aws-apigatewayv2-integrations-alpha': 2.72.1-alpha.0_pqn5m6e57bvoqxz3r5q7ubae2u
-      '@aws-cdk/cloud-assembly-schema': 2.72.1
-      '@aws-cdk/cloudformation-diff': 2.72.1
-      '@aws-cdk/cx-api': 2.72.1
-      '@aws-sdk/client-cloudformation': 3.328.0
-      '@aws-sdk/client-iot': 3.328.0
-      '@aws-sdk/client-iot-data-plane': 3.328.0
-      '@aws-sdk/client-lambda': 3.328.0
-      '@aws-sdk/client-rds-data': 3.328.0
-      '@aws-sdk/client-s3': 3.328.0_5m4lhkgkwgwojgl6n4b5o6qyl4
-      '@aws-sdk/client-ssm': 3.328.0
-      '@aws-sdk/client-sts': 3.328.0
-      '@aws-sdk/config-resolver': 3.310.0
-      '@aws-sdk/credential-providers': 3.328.0
-      '@aws-sdk/middleware-retry': 3.327.0
-      '@aws-sdk/middleware-signing': 3.325.0
-      '@aws-sdk/signature-v4-crt': 3.310.0
-      '@aws-sdk/smithy-client': 3.325.0
-      '@babel/core': 7.21.8
-      '@babel/generator': 7.21.5
-      '@trpc/server': 9.16.0
-      aws-cdk-lib: 2.72.1_constructs@10.1.156
-      aws-iot-device-sdk: 2.2.12
-      aws-sdk: 2.1373.0
-      builtin-modules: 3.2.0
-      cdk-assets: 2.72.1
-      chalk: 5.2.0
-      chokidar: 3.5.3
-      ci-info: 3.8.0
-      colorette: 2.0.20
-      conf: 10.2.0
-      constructs: 10.1.156
-      cross-spawn: 7.0.3
-      dendriform-immer-patch-optimiser: 2.1.3_immer@9.0.21
-      dotenv: 16.0.3
-      esbuild: 0.16.13
-      express: 4.18.2
-      fast-jwt: 1.7.2
-      get-port: 6.1.2
-      glob: 8.1.0
-      graphql: 16.6.0
-      graphql-yoga: 3.9.1_graphql@16.6.0
-      immer: 9.0.21
-      ink: 4.2.0_react@18.2.0
-      ink-spinner: 5.0.0_ink@4.2.0+react@18.2.0
-      kysely: 0.23.5
-      kysely-codegen: 0.10.0_kysely@0.23.5
-      kysely-data-api: 0.2.0_xnlrfsrdtid6icscktnc4t2g4q
-      minimatch: 6.2.0
-      openid-client: 5.4.2
-      ora: 6.3.0
-      react: 18.2.0
-      remeda: 1.14.0
-      sst-aws-cdk: 2.62.2-3
-      tree-kill: 1.2.2
-      undici: 5.22.0
-      uuid: 9.0.0
-      ws: 8.13.0
-      yargs: 17.7.2
-      zip-local: 0.3.5
-    transitivePeerDependencies:
-      - '@types/react'
-      - aws-crt
-      - better-sqlite3
-      - bufferutil
-      - debug
-      - mysql2
-      - pg
-      - react-devtools-core
-      - supports-color
-      - typescript
-      - utf-8-validate
-    dev: true
-
   /sst/2.8.7_typescript@5.0.4:
     resolution: {integrity: sha512-oqti6tpws0pP+oyfN2A4Aw6K2EKMDT9cwgw2CjJykvRK87zEr+8uIsPphvQJViVr7v5n16Ly2l9KGhKD+nHpEA==}
     hasBin: true
@@ -5687,13 +5551,6 @@ packages:
   /type-fest/0.12.0:
     resolution: {integrity: sha512-53RyidyjvkGpnWPMF9bQgFtWp+Sl8O2Rp13VavmJgfAP9WWG6q6TkrKU8iyJdnwnfgHI6k2hTlgqH4aSdjoTbg==}
     engines: {node: '>=10'}
-    dev: true
-
-  /type-fest/3.10.0:
-    resolution: {integrity: sha512-hmAPf1datm+gt3c2mvu0sJyhFy6lTkIGf0GzyaZWxRLnabQfPUqg6tF95RPg6sLxKI7nFLGdFxBcf2/7+GXI+A==}
-    engines: {node: '>=14.16'}
-    peerDependencies:
-      typescript: '>=4.7.0'
     dev: true
 
   /type-fest/3.10.0_typescript@5.0.4:
