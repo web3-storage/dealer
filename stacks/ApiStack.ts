@@ -3,14 +3,11 @@ import {
   StackContext,
 } from 'sst/constructs';
 
-import { getApiPackageJson, getGitInfo } from './config';
+import { getApiPackageJson, getCustomDomain, getGitInfo } from './config';
 
 export function ApiStack({ stack }: StackContext) {
   // Setup API
-  const customDomain = {
-    domainName: undefined
-  }
-  // const customDomain = getCustomDomain(stack.stage, process.env.HOSTED_ZONE)
+  const customDomain = getCustomDomain(stack.stage, process.env.HOSTED_ZONE)
   const pkg = getApiPackageJson()
   const git = getGitInfo()
 
