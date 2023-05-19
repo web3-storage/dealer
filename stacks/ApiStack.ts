@@ -12,6 +12,7 @@ export function ApiStack({ stack }: StackContext) {
   const git = getGitInfo()
 
   const api = new Api(stack, 'api', {
+    customDomain,
     defaults: {
       function: {
         environment: {
