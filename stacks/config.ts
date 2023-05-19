@@ -1,6 +1,7 @@
 import { RemovalPolicy } from 'aws-cdk-lib'
 import git from 'git-rev-sync'
 import * as pack from '../package.json'
+import { LayerVersion } from 'aws-cdk-lib/aws-lambda'
 
 /**
  * Get nicer bucket names
@@ -58,10 +59,19 @@ export function setupSentry (app: import('sst/constructs').App, stack: import('s
     return
   }
 
+  const sentry = LayerVersion.fromLayerVersionArn(
+    stack,
+    "SentryLayer",
+    `arn:aws:lambda:${app.region}:943013980633:layer:SentryNodeServerlessSDK:35`
+  )
+
   const { SENTRY_DSN } = getEnv()
 
-  stack.addDefaultFunctionEnv({
-    SENTRY_DSN,
+  stack.addDefaultFunctionLayers([sentry])
+  stack.addDefaultFunctionEnv({ 
+    SENTRY_DSN, 
+    SENTRY_TRACES_SAMPLE_RATE: "1.0", 
+    NODE_OPTIONS: "-r @sentry/serverless/dist/awslambda-auto", 
   })
 }
 

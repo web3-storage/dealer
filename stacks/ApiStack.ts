@@ -3,9 +3,17 @@ import {
   StackContext,
 } from 'sst/constructs';
 
-import { getApiPackageJson, getCustomDomain, getGitInfo } from './config';
+import {
+  getApiPackageJson,
+  getCustomDomain,
+  getGitInfo,
+  setupSentry
+} from './config';
 
-export function ApiStack({ stack }: StackContext) {
+export function ApiStack({ app, stack }: StackContext) {
+  // Setup app monitoring with Sentry
+  setupSentry(app, stack)
+  
   // Setup API
   const customDomain = getCustomDomain(stack.stage, process.env.HOSTED_ZONE)
   const pkg = getApiPackageJson()
@@ -25,6 +33,7 @@ export function ApiStack({ stack }: StackContext) {
     },
     routes: {
       'GET /version': 'packages/functions/src/api/version.handler',
+      'GET /error': 'packages/functions/src/api/error.handler',
     }
   })
 
