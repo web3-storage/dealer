@@ -1,5 +1,8 @@
 import all from 'it-all'
 import * as AggregateAPI from '@web3-storage/aggregate-api'
+import * as Offer from '@web3-storage/capabilities/offer'
+import { Signer } from '@ucanto/interface'
+import { ConnectionView } from '@ucanto/interface'
 
 import { ArrangedOfferStore, ArrangedOffer } from './tables/arranged-offer-store'
 
@@ -30,4 +33,23 @@ export async function mutateOffersToArrange (arrangedOfferStore: ArrangedOfferSt
   return offersToArrange
 }
 
-// TODO: arrange offers
+export async function offerArrange(offer: ArrangedOffer, serviceSigner: Signer, conn: ConnectionView<any>) {
+  const { stat: status, commitmentProof } = offer
+  
+  if (status !== 'accepted' && status !== 'rejected') {
+    // TODO: should this be a receipt of invocation with error?
+    throw new Error(`offer arrange for ${commitmentProof} cannot be fulfilled with given status: ${status}`)
+  }
+
+  const invocation = Offer.arrange
+    .invoke({
+      issuer: serviceSigner,
+      audience: serviceSigner,
+      with: serviceSigner.did(),
+      nb: {
+        commitmentProof,
+      },
+    })
+
+  await invocation.execute(conn)
+}

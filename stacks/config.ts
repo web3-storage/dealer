@@ -6,14 +6,14 @@ import { LayerVersion } from 'aws-cdk-lib/aws-lambda'
 /**
  * Get nicer bucket names
  */
-export function getBucketName (name: string, stage: string, version = 0) {
+export function getConstructName (name: string, stage: string, version = 0) {
   // e.g `carpark-prod-0` or `satnav-pr101-0`
   return `${name}-${stage}-${version}`
 }
 
 export function getBucketConfig(name: string, stage: string, version = 0){
   return {
-    bucketName: getBucketName(name, stage, version),
+    bucketName: getConstructName(name, stage, version),
     ...(isPrBuild(stage) && {
       autoDeleteObjects: true,
       removalPolicy: RemovalPolicy.DESTROY

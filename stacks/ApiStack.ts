@@ -1,6 +1,5 @@
 import {
   Api,
-  Config,
   StackContext,
   use
 } from 'sst/constructs';
@@ -14,7 +13,12 @@ import {
 } from './config';
 
 export function ApiStack({ app, stack }: StackContext) {
-  const { offerBucket, arrangedOfferTable } = use(DataStack)
+  const {
+    offerBucket,
+    arrangedOfferTable,
+    privateKey,
+    ucanLogBasicAuth
+  } = use(DataStack)
 
   // Setup app monitoring with Sentry
   setupSentry(app, stack)
@@ -23,14 +27,13 @@ export function ApiStack({ app, stack }: StackContext) {
   const customDomain = getCustomDomain(stack.stage, process.env.HOSTED_ZONE)
   const pkg = getApiPackageJson()
   const git = getGitInfo()
-  const privateKey = new Config.Secret(stack, 'PRIVATE_KEY')
-  const ucanLogBasicAuth = new Config.Secret(stack, 'UCAN_LOG_BASIC_AUTH')
 
   const api = new Api(stack, 'api', {
     customDomain,
     defaults: {
       function: {
         permissions: [
+          arrangedOfferTable,
           offerBucket
         ],
         environment: {

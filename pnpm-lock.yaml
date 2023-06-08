@@ -57,10 +57,19 @@ importers:
       '@ipld/dag-ucan':
         specifier: 3.3.2
         version: 3.3.2
+      '@ucanto/client':
+        specifier: 8.0.0
+        version: 8.0.0
+      '@ucanto/core':
+        specifier: 8.0.0
+        version: 8.0.0
       '@ucanto/interface':
         specifier: 8.0.0
         version: 8.0.0
       '@ucanto/principal':
+        specifier: ^8.0.0
+        version: 8.0.0
+      '@ucanto/server':
         specifier: ^8.0.0
         version: 8.0.0
       '@web3-storage/aggregate-api':
@@ -115,15 +124,27 @@ importers:
 
   packages/functions:
     dependencies:
+      '@aws-sdk/util-dynamodb':
+        specifier: ^3.338.0
+        version: 3.338.0
+      '@ipld/dag-ucan':
+        specifier: ^3.3.2
+        version: 3.3.2
       '@spade-proxy/core':
         specifier: '*'
         version: link:../core
+      '@ucanto/client':
+        specifier: ^8.0.0
+        version: 8.0.0
       '@ucanto/server':
         specifier: ^8.0.0
         version: 8.0.0
       '@ucanto/transport':
         specifier: ^8.0.0
         version: 8.0.0
+      multiformats:
+        specifier: ^11.0.2
+        version: 11.0.2
     devDependencies:
       '@sentry/serverless':
         specifier: 7.52.1
