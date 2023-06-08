@@ -16,11 +16,15 @@
     "@web3-storage/aggregate-api": "^0.0.0",
     "@web3-storage/aggregate-client": "^0.0.0",
     "@web3-storage/capabilities": "^6.0.0",
+    "it-all": "^3.0.2",
+    "multiformats": "^11.0.2",
     "node-fetch": "^3.3.1",
     "p-retry": "^5.1.2"
   },
   "devDependencies": {
+    "@ipld/car": "5.1.1",
     "@types/node": "^18.16.3",
+    "@ucanto/transport": "^8.0.0",
     "@web-std/blob": "^3.0.4",
     "ava": "^5.3.0",
     "nanoid": "^4.0.0",

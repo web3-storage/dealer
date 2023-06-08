@@ -5,7 +5,6 @@ import {
 } from 'sst/constructs';
 
 import { arrangedOfferTableProps } from '../packages/core/tables/index'
-
 import { getBucketConfig } from './config';
 
 export function DataStack({ stack }: StackContext) {
@@ -22,7 +21,11 @@ export function DataStack({ stack }: StackContext) {
    */
   const arrangedOfferTable = new Table(stack, 'arranged-offer', {
     ...arrangedOfferTableProps,
+    // information that will be written to the stream
+    stream: 'new_image',
   })
+
+  // TODO: Stream table with batches of 1
 
   return {
     offerBucket,

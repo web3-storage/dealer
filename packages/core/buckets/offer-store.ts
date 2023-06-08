@@ -2,6 +2,8 @@ import {
   S3Client,
   ServiceInputTypes,
   PutObjectCommand,
+  GetObjectCommand,
+  ListObjectsV2Command
 } from '@aws-sdk/client-s3'
 import pRetry from 'p-retry'
 
@@ -40,8 +42,61 @@ export function useOfferStore(s3client: S3Client, bucketName: string, arrangedOf
       // add commitmentProof for polling
       // once an aggregate is fulfilled (accepted or rejected) a receipt will be generated.
       await arrangedOfferStore.set(commitmentProof, 'queued')
+    },
+    putMergedOffers: async (key, mergedOffers) => {
+      const putCmd = new PutObjectCommand({
+        Bucket: bucketName,
+        ContentType: 'application/json',
+        Key: key,
+        Body: JSON.stringify(mergedOffers)
+      })
+
+      await pRetry(() => s3client.send(putCmd))
+    },
+    list: async function * (prefix: string) {
+      let continuationToken
+      do {
+        const listCmd = new ListObjectsV2Command({
+          Prefix: prefix,
+          Bucket: bucketName,
+          ContinuationToken: continuationToken
+        }) as ListObjectsV2Command
+
+        const response = await s3client.send(listCmd)
+        continuationToken = response.NextContinuationToken
+
+        if (response.Contents) {
+          const items = await Promise.all(
+            response.Contents.map(async item => {
+              const getCmd = new GetObjectCommand({
+                Bucket: bucketName,
+                Key: item.Key
+              })
+
+              return await s3client.send(getCmd)
+            })
+          )
+          for (const item of items) {
+            const offer = await item.Body?.transformToString()
+            if (offer) {
+              yield JSON.parse(offer)
+            }
+          }
+        }
+
+      } while (continuationToken)
     }
-  } as AggregateAPI.OfferStore
+  } as OfferStore
+}
+
+export interface OfferStore extends AggregateAPI.OfferStore {
+  putMergedOffers: (key: string, mergedOffers: MergedOffer[]) => Promise<void>
+  list: (prefix: string) => AsyncGenerator<MergedOffer, void>
+}
+
+export type MergedOffer = {
+  commitmentProof: string,
+  offers: AggregateAPI.Offer[]
 }
 
 /**
