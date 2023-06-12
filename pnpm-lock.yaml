@@ -12,6 +12,12 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
     devDependencies:
+      '@ipld/car':
+        specifier: 5.1.1
+        version: 5.1.1
+      '@ipld/dag-ucan':
+        specifier: ^3.3.2
+        version: 3.3.2
       '@sentry/serverless':
         specifier: ^7.52.1
         version: 7.52.1
@@ -24,15 +30,39 @@ importers:
       '@types/node':
         specifier: ^18.16.3
         version: 18.16.3
+      '@ucanto/client':
+        specifier: 8.0.0
+        version: 8.0.0
+      '@ucanto/principal':
+        specifier: 8.0.0
+        version: 8.0.0
+      '@ucanto/transport':
+        specifier: 8.0.0
+        version: 8.0.0
+      '@web-std/fetch':
+        specifier: 4.1.0
+        version: 4.1.0
+      '@web3-storage/aggregate-client':
+        specifier: ^0.0.0
+        version: 0.0.0
+      ava:
+        specifier: ^5.3.0
+        version: 5.3.0
       aws-cdk-lib:
         specifier: 2.72.1
         version: 2.72.1(constructs@10.1.156)
       constructs:
         specifier: 10.1.156
         version: 10.1.156
+      dotenv:
+        specifier: 16.1.4
+        version: 16.1.4
       git-rev-sync:
         specifier: ^3.0.2
         version: 3.0.2
+      multiformats:
+        specifier: ^11.0.2
+        version: 11.0.2
       sst:
         specifier: ^2.8.3
         version: 2.8.3
@@ -2969,7 +2999,6 @@ packages:
 
   /@noble/ed25519@1.7.3:
     resolution: {integrity: sha512-iR8GBkDt0Q3GyaVcIu7mSsVIqnFbkbRzGLWlvhwunacoLwt4J3swfKhfaM6rN6WY+TBGoYT1GtT1mIh2/jGbRQ==}
-    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3265,7 +3294,6 @@ packages:
     dependencies:
       '@ucanto/core': 8.0.0
       '@ucanto/interface': 8.0.0
-    dev: false
 
   /@ucanto/core@7.1.1:
     resolution: {integrity: sha512-RXYOXVTqpTqeYBw7aVGna4JwLEi4xnfN4eX53n+9SLNbh7lNrD7bZuXGMB53W4PimRIZp92tQSWSO8ljw3hf1Q==}
@@ -3307,7 +3335,6 @@ packages:
       '@ucanto/interface': 8.0.0
       multiformats: 11.0.2
       one-webcrypto: 1.0.3
-    dev: false
 
   /@ucanto/server@8.0.0:
     resolution: {integrity: sha512-ISpDq6CHSmxgACtLHaVziwWuQrvBRyOzhyjqP9D8v34ltMQSev0yHsB9/3WT+2+66odm80xZ0OVbpJ4mTnqApg==}
@@ -3341,7 +3368,6 @@ packages:
       '@ucanto/core': 8.0.0
       '@ucanto/interface': 8.0.0
       multiformats: 11.0.2
-    dev: false
 
   /@vitest/expect@0.31.0:
     resolution: {integrity: sha512-Jlm8ZTyp6vMY9iz9Ny9a0BHnCG4fqBa8neCF6Pk/c/6vkUk49Ls6UBlgGAU82QnzzoaUs9E/mUhq/eq9uMOv/g==}
@@ -3389,8 +3415,32 @@ packages:
       web-encoding: 1.1.5
     dev: true
 
+  /@web-std/fetch@4.1.0:
+    resolution: {integrity: sha512-ZRizMcP8YyuRlhIsRYNFD9x/w28K7kbUhNGmKM9hDy4qeQ5xMTk//wA89EF+Clbl6EP4ksmCcN+4TqBMSRL8Zw==}
+    engines: {node: ^10.17 || >=12.3}
+    dependencies:
+      '@web-std/blob': 3.0.4
+      '@web-std/form-data': 3.0.2
+      '@web-std/stream': 1.0.1
+      '@web3-storage/multipart-parser': 1.0.0
+      data-uri-to-buffer: 3.0.1
+      mrmime: 1.0.1
+    dev: true
+
+  /@web-std/form-data@3.0.2:
+    resolution: {integrity: sha512-rhc8IRw66sJ0FHcnC84kT3mTN6eACTuNftkt1XSl1Ef6WRKq4Pz65xixxqZymAZl1K3USpwhLci4SKNn4PYxWQ==}
+    dependencies:
+      web-encoding: 1.1.5
+    dev: true
+
   /@web-std/stream@1.0.0:
     resolution: {integrity: sha512-jyIbdVl+0ZJyKGTV0Ohb9E6UnxP+t7ZzX4Do3AHjZKxUXKMs9EmqnBDQgHF7bEw0EzbQygOjtt/7gvtmi//iCQ==}
+    dependencies:
+      web-streams-polyfill: 3.2.1
+    dev: true
+
+  /@web-std/stream@1.0.1:
+    resolution: {integrity: sha512-tsz4Y0WNDgFA5jwLSeV7/UV5rfMIlj0cPsSLVfTihjaVW0OJPd5NxJ3le1B3yLyqqzRpeG5OAfJAADLc4VoGTA==}
     dependencies:
       web-streams-polyfill: 3.2.1
     dev: true
@@ -3417,7 +3467,6 @@ packages:
       '@ucanto/interface': 8.0.0
       '@ucanto/transport': 8.0.0
       '@web3-storage/capabilities': 6.0.0
-    dev: false
 
   /@web3-storage/capabilities@6.0.0:
     resolution: {integrity: sha512-osEk6Rt5INGCGgefpY12glw9vdrINC/uRzysNRSez4oyNmGlJVqHSYCGD7mreXL7jOaY+m33AcpQtI9qySbjSg==}
@@ -3427,7 +3476,10 @@ packages:
       '@ucanto/principal': 8.0.0
       '@ucanto/transport': 8.0.0
       '@ucanto/validator': 8.0.0
-    dev: false
+
+  /@web3-storage/multipart-parser@1.0.0:
+    resolution: {integrity: sha512-BEO6al7BYqcnfX15W2cnGR+Q566ACXAT9UQykORCWW80lmkpWsnEob6zJS1ZVBKsSJC8+7vJkHwlp+lXG1UCdw==}
+    dev: true
 
   /@whatwg-node/events@0.0.2:
     resolution: {integrity: sha512-WKj/lI4QjnLuPrim0cfO7i+HsDSXHxNv1y0CrJhdntuO3hxWZmnXCwNDnwOvry11OjRin6cgWNF+j/9Pn8TN4w==}
@@ -4465,6 +4517,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       array-find-index: 1.0.2
+    dev: true
+
+  /data-uri-to-buffer@3.0.1:
+    resolution: {integrity: sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==}
+    engines: {node: '>= 6'}
     dev: true
 
   /data-uri-to-buffer@4.0.1:
@@ -6018,6 +6075,11 @@ packages:
       - supports-color
       - utf-8-validate
 
+  /mrmime@1.0.1:
+    resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
+    engines: {node: '>=10'}
+    dev: true
+
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: true
@@ -6154,7 +6216,6 @@ packages:
 
   /one-webcrypto@1.0.3:
     resolution: {integrity: sha512-fu9ywBVBPx0gS9K0etIROTiCkvI5S1TDjFsYFb3rC1ewFxeOqsbzq7aIMBHsYfrTHBcGXJaONXXjTl8B01cW1Q==}
-    dev: false
 
   /onetime@5.1.2:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
