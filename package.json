@@ -12,7 +12,7 @@
     "deploy": "sst deploy",
     "remove": "sst remove",
     "console": "sst console",
-    "typecheck": "tsc --noEmit && npm run typecheck -w packages/core",
+    "typecheck": "tsc --build && npm run typecheck -w packages/core",
     "clean": "rm -rf node_modules pnpm-lock.yml packages/*/{pnpm-lock.yml,.next,out,coverage,.nyc_output,worker,dist,node_modules}"
   },
   "devDependencies": {

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "ava --serial --no-worker-threads --verbose --timeout=60s 'test/**.test.js'",
-    "typecheck": "tsc -noEmit"
+    "typecheck": "tsc --build"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.338.0",

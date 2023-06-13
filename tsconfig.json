@@ -2,6 +2,7 @@
   "extends": "@tsconfig/node18/tsconfig.json",
   "exclude": ["packages"],
   "compilerOptions": {
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noEmit": true
   }
 }
