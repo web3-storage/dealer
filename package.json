@@ -8,11 +8,12 @@
   "scripts": {
     "dev": "sst dev",
     "build": "sst build",
-    "test": "echo \"no test\"",
+    "test": "npm test -w packages/core",
     "deploy": "sst deploy",
     "remove": "sst remove",
     "console": "sst console",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --build && npm run typecheck -w packages/core",
+    "clean": "rm -rf node_modules pnpm-lock.yml packages/*/{pnpm-lock.yml,.next,out,coverage,.nyc_output,worker,dist,node_modules}"
   },
   "devDependencies": {
     "@sentry/serverless": "^7.52.1",
@@ -22,8 +23,9 @@
     "aws-cdk-lib": "2.72.1",
     "constructs": "10.1.156",
     "git-rev-sync": "^3.0.2",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
-    "@tsconfig/node16": "^1.0.3"
+    "@tsconfig/node18": "^2.0.1"
   },
   "workspaces": [
     "packages/*"
