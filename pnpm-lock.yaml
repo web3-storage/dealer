@@ -58,23 +58,20 @@ importers:
         specifier: 3.3.2
         version: 3.3.2
       '@ucanto/interface':
-        specifier: 8.0.0
+        specifier: ^8.0.0
         version: 8.0.0
       '@ucanto/principal':
         specifier: ^8.0.0
         version: 8.0.0
       '@web3-storage/aggregate-api':
-        specifier: ^0.0.0
-        version: 0.0.0
+        specifier: ^1.0.0
+        version: 1.0.0
       '@web3-storage/aggregate-client':
-        specifier: ^0.0.0
-        version: 0.0.0
+        specifier: ^1.0.0
+        version: 1.0.0
       '@web3-storage/capabilities':
-        specifier: ^6.0.0
-        version: 6.0.0
-      node-fetch:
-        specifier: ^3.3.1
-        version: 3.3.1
+        specifier: ^7.0.0
+        version: 7.0.0
       p-retry:
         specifier: ^5.1.2
         version: 5.1.2
@@ -86,17 +83,17 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       ava:
-        specifier: ^5.3.0
-        version: 5.3.0
+        specifier: ^5.3.1
+        version: 5.3.1
       nanoid:
-        specifier: ^4.0.0
+        specifier: ^4.0.2
         version: 4.0.2
       sst:
         specifier: ^2.8.3
         version: 2.8.7(typescript@5.0.4)
       testcontainers:
-        specifier: ^9.8.0
-        version: 9.8.0
+        specifier: ^9.10.0
+        version: 9.10.0
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
@@ -3937,8 +3934,8 @@ packages:
       '@types/ssh2': 1.11.11
     dev: true
 
-  /@types/dockerode@3.3.18:
-    resolution: {integrity: sha512-4EcP136jNMBZQ4zTHlI1VP2RpIQ2uJvRpjta3W2Cc7Ti7rk2r3TgVKjxR0Tb3NrT9ObXvl7Tv5nxra6BHEpkWg==}
+  /@types/dockerode@3.3.19:
+    resolution: {integrity: sha512-7CC5yIpQi+bHXwDK43b/deYXteP3Lem9gdocVVHJPSRJJLMfbiOchQV3rDmAPkMw+n3GIVj7m1six3JW+VcwwA==}
     dependencies:
       '@types/docker-modem': 3.0.2
       '@types/node': 18.16.5
@@ -4148,8 +4145,8 @@ packages:
       web-streams-polyfill: 3.2.1
     dev: true
 
-  /@web3-storage/aggregate-api@0.0.0:
-    resolution: {integrity: sha512-mvgdJNp51g7sm2LAtdQ7ldRV9FEl8CnL+GDxuiK/J929SerT/eJ2hz9fSTfWC2I6QWHykqMQY6pcqJwssPHnvA==}
+  /@web3-storage/aggregate-api@1.0.0:
+    resolution: {integrity: sha512-ga2scJmUtpJdCwsnT9lajRZVwZQRxDSjX8MWcEPxdTQmbihYsLQKRwfDEzzQ7XLmzKow370OQrVqFOSpl2Wzhw==}
     engines: {node: '>=16.15'}
     dependencies:
       '@ucanto/client': 8.0.0
@@ -4157,11 +4154,12 @@ packages:
       '@ucanto/interface': 8.0.0
       '@ucanto/server': 8.0.1
       '@ucanto/transport': 8.0.0
-      '@web3-storage/capabilities': 6.0.0
+      '@web3-storage/capabilities': 7.0.0
+      '@web3-storage/data-segment': 1.0.1
     dev: false
 
-  /@web3-storage/aggregate-client@0.0.0:
-    resolution: {integrity: sha512-GX8JV7GifI7cvSZVuWRA5AYijzDYtFdt2B/YNFFiqo8ZamMuwmv2hN1sP4L+RpZRTQprnXFWXbdImCeRmFb7XQ==}
+  /@web3-storage/aggregate-client@1.0.0:
+    resolution: {integrity: sha512-13Bjhw3jbya6w6FkrHwE/HX/pHXv93vfU7rEbV9j6g5SKBwop40fxQkCCwchhXfwt7cQJCcy0GIM3pR3jqyJ0A==}
     dependencies:
       '@ipld/dag-cbor': 9.0.0
       '@ipld/dag-ucan': 3.3.2
@@ -4169,17 +4167,23 @@ packages:
       '@ucanto/core': 8.0.0
       '@ucanto/interface': 8.0.0
       '@ucanto/transport': 8.0.0
-      '@web3-storage/capabilities': 6.0.0
+      '@web3-storage/capabilities': 7.0.0
     dev: false
 
-  /@web3-storage/capabilities@6.0.0:
-    resolution: {integrity: sha512-osEk6Rt5INGCGgefpY12glw9vdrINC/uRzysNRSez4oyNmGlJVqHSYCGD7mreXL7jOaY+m33AcpQtI9qySbjSg==}
+  /@web3-storage/capabilities@7.0.0:
+    resolution: {integrity: sha512-pF6fpNduEDkHGVV+aP2+N7lbSD0C1LL1CyrhPEbhf9wUHOJXPWRMbfhIJVcdL06pTvZJDYoRpOWmhB+07QLYwg==}
     dependencies:
       '@ucanto/core': 8.0.0
       '@ucanto/interface': 8.0.0
       '@ucanto/principal': 8.0.0
       '@ucanto/transport': 8.0.0
       '@ucanto/validator': 8.0.0
+    dev: false
+
+  /@web3-storage/data-segment@1.0.1:
+    resolution: {integrity: sha512-qgVSLN/VZhNgprFJvzLTK4wGTAQYpQ9O42FrskGxlDgGjBx7ZCw4VL8mgzDVhR4MHXL/yA/bXFQtm5JST+JAZQ==}
+    dependencies:
+      multiformats: 11.0.2
     dev: false
 
   /@whatwg-node/events@0.0.2:
@@ -4468,8 +4472,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /ava@5.3.0:
-    resolution: {integrity: sha512-QYvBdyygl1LGX13IuYsC4bkwVCzZeovMGbxYkD73i7DVJxNlWnFa06YgrBOTbjw2QvSKUl5fOJ92Kj5WK9hSeg==}
+  /ava@5.3.1:
+    resolution: {integrity: sha512-Scv9a4gMOXB6+ni4toLuhAm9KYWEjsgBglJl+kMGI5+IVDt120CCDZyB5HNU9DjmLI2t4I0GbnxGLmmRfGTJGg==}
     engines: {node: '>=14.19 <15 || >=16.15 <17 || >=18'}
     hasBin: true
     peerDependencies:
@@ -5359,11 +5363,11 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /docker-compose@0.23.19:
-    resolution: {integrity: sha512-v5vNLIdUqwj4my80wxFDkNH+4S85zsRuH29SO7dCWVWPCMt/ohZBsGN6g6KXWifT0pzQ7uOxqEKCYCDPJ8Vz4g==}
+  /docker-compose@0.24.1:
+    resolution: {integrity: sha512-CVphzCi0Hmw/0CHlAzgiwhLsJjFRqnvpBYMYbf63bz6MON69ElgrfrgQTmgPtEjbifjgaptu3+Gea62vI+9jiA==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      yaml: 1.10.2
+      yaml: 2.3.1
     dev: true
 
   /docker-modem@3.0.8:
@@ -7482,6 +7486,13 @@ packages:
       glob: 7.2.3
     dev: true
 
+  /rimraf@3.0.2:
+    resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    hasBin: true
+    dependencies:
+      glob: 7.2.3
+    dev: true
+
   /rollup@3.21.5:
     resolution: {integrity: sha512-a4NTKS4u9PusbUJcfF4IMxuqjFzjm6ifj76P54a7cKnvVzJaG12BLVR+hgU2YDGHzyMMQNxLAZWuALsn8q2oQg==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
@@ -8010,24 +8021,25 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /testcontainers@9.8.0:
-    resolution: {integrity: sha512-61IlJeVrUbS5JlAgM/N0koFnRxsID+vDap7CUmgaHXSGxmFofCiokB7kD96c1BtDWGOznrd7lTAPGSkd3RVkPA==}
+  /testcontainers@9.10.0:
+    resolution: {integrity: sha512-gU3fU9jNvyhSyFdeVPH3Lxq2l4o09kmIa8edGcB6EJM3M6E8m1vC5aOtqmL1Bj/aC/DNCp0m5FMehm/rRB8lhg==}
     engines: {node: '>= 10.16'}
     dependencies:
       '@balena/dockerignore': 1.0.2
       '@types/archiver': 5.3.2
-      '@types/dockerode': 3.3.18
+      '@types/dockerode': 3.3.19
       archiver: 5.3.1
       async-lock: 1.4.0
       byline: 5.0.0
       debug: 4.3.4
-      docker-compose: 0.23.19
+      docker-compose: 0.24.1
       dockerode: 3.3.5
       get-port: 5.1.1
       node-fetch: 2.6.11
       properties-reader: 2.2.0
       ssh-remote-port-forward: 1.0.4
       tar-fs: 2.1.1
+      tmp: 0.2.1
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -8050,6 +8062,13 @@ packages:
   /tinyspy@2.1.0:
     resolution: {integrity: sha512-7eORpyqImoOvkQJCSkL0d0mB4NHHIFAy4b1u8PHdDa7SjGS2njzl6/lyGoZLm+eyYEtlUmFGE0rFj66SWxZgQQ==}
     engines: {node: '>=14.0.0'}
+    dev: true
+
+  /tmp@0.2.1:
+    resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
+    engines: {node: '>=8.17.0'}
+    dependencies:
+      rimraf: 3.0.2
     dev: true
 
   /to-fast-properties@2.0.0:
@@ -8635,6 +8654,11 @@ packages:
   /yaml@1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
+    dev: true
+
+  /yaml@2.3.1:
+    resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
+    engines: {node: '>= 14'}
     dev: true
 
   /yargs-parser@20.2.9:

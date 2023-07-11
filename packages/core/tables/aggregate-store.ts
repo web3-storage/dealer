@@ -6,7 +6,7 @@ export function createAggregateStore() {
 
 export function useAggregateStore() {
   return {
-    get: async (commitmentProof) => {
+    get: async (pieceLink) => {
       throw new Error('not yet implemented')
     }
   } as AggregateAPI.AggregateStore

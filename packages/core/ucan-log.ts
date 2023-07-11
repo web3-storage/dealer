@@ -1,5 +1,4 @@
 import { HTTPRequest } from '@ucanto/interface'
-import fetch from 'node-fetch'
 import pRetry from 'p-retry'
 
 export const connect = (input: { url: URL, auth?: string }) => new UCANLog(input)
