@@ -19,11 +19,11 @@ export function createArrangedOfferStore(region: string, tableName: string, opti
 
 export function useArrangedOfferStore(dynamoDb: DynamoDBClient, tableName: string) {
   return {
-    get: async (commitmentProof) => {
+    get: async (pieceLink) => {
       const cmd = new GetItemCommand({
         TableName: tableName,
         Key: marshall({
-          commitmentProof: commitmentProof.toString()
+          link: pieceLink.toString()
         })
       })
 
@@ -32,9 +32,9 @@ export function useArrangedOfferStore(dynamoDb: DynamoDBClient, tableName: strin
         return unmarshall(response.Item)
       }
     },
-    set: async (commitmentProof, stat) => {
+    set: async (pieceLink, stat) => {
       const item = {
-        commitmentProof: commitmentProof.toString(),
+        link: pieceLink.toString(),
         stat
       }
 
@@ -49,7 +49,7 @@ export function useArrangedOfferStore(dynamoDb: DynamoDBClient, tableName: strin
 }
 
 export interface ArrangedOfferStore extends AggregateAPI.ArrangedOfferStore {
-  set: (commitmentProof: Link<unknown, number, number, 0 | 1>, status: string) => Promise<void>
+  set: (pieceLink: Link<unknown, number, number, 0 | 1>, status: string) => Promise<void>
 }
 
 export interface ArrangedOfferStoreDbOptions {

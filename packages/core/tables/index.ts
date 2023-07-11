@@ -2,15 +2,15 @@ import { TableProps } from 'sst/constructs'
 
 export const arrangedOfferTableProps = {
   fields: {
-    commitmentProof: 'string', // `bafcommp...1`
+    link: 'string', // `bafcommp...1`
     stat: 'string',          // `queued`
   },
   // name must be unique to satisfy index constraint
-  primaryIndex: { partitionKey: 'commitmentProof' },
+  primaryIndex: { partitionKey: 'link' },
   globalIndexes: {
     indexStat: {
       partitionKey: 'stat',
-      sortKey: 'commitmentProof',
+      sortKey: 'link',
       projection: 'keys_only'
     }
   }

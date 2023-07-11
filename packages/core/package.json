@@ -11,21 +11,20 @@
     "@aws-sdk/client-s3": "^3.338.0",
     "@aws-sdk/util-dynamodb": "^3.338.0",
     "@ipld/dag-ucan": "3.3.2",
-    "@ucanto/interface": "8.0.0",
+    "@ucanto/interface": "^8.0.0",
     "@ucanto/principal": "^8.0.0",
-    "@web3-storage/aggregate-api": "^0.0.0",
-    "@web3-storage/aggregate-client": "^0.0.0",
-    "@web3-storage/capabilities": "^6.0.0",
-    "node-fetch": "^3.3.1",
+    "@web3-storage/aggregate-api": "^1.0.0",
+    "@web3-storage/aggregate-client": "^1.0.0",
+    "@web3-storage/capabilities": "^7.0.0",
     "p-retry": "^5.1.2"
   },
   "devDependencies": {
     "@types/node": "^18.16.3",
     "@web-std/blob": "^3.0.4",
-    "ava": "^5.3.0",
-    "nanoid": "^4.0.0",
+    "ava": "^5.3.1",
+    "nanoid": "^4.0.2",
     "sst": "^2.8.3",
-    "testcontainers": "^9.8.0",
+    "testcontainers": "^9.10.0",
     "typescript": "^5.0.4"
   },
   "ava": {

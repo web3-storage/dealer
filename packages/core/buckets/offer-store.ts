@@ -24,22 +24,22 @@ export function createOfferStore(region: string, bucketName: string, arrangedOff
 export function useOfferStore(s3client: S3Client, bucketName: string, arrangedOfferStore: ArrangedOfferStore) {
   return {
     queue: async (aggregateOffer: AggregateAPI.OfferToQueue) => {
-      const { commitmentProof, offers } = aggregateOffer
+      const { piece, offers } = aggregateOffer
       const putCmd = new PutObjectCommand({
         Bucket: bucketName,
         ContentType: 'application/json',
-        Key: `${getNextUtcDateName()} ${commitmentProof.toString()}`,
+        Key: `${getNextUtcDateName()} ${piece.link.toString()}`,
         Body: JSON.stringify({
-          commitmentProof: commitmentProof.toString(),
+          piece: piece.link.toString(),
           offers
         })
       })
 
       await pRetry(() => s3client.send(putCmd))
 
-      // add commitmentProof for polling
+      // add piece for polling
       // once an aggregate is fulfilled (accepted or rejected) a receipt will be generated.
-      await arrangedOfferStore.set(commitmentProof, 'queued')
+      await arrangedOfferStore.set(piece.link, 'queued')
     }
   } as AggregateAPI.OfferStore
 }

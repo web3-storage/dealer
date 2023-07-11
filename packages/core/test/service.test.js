@@ -69,18 +69,18 @@ function getAggregateStore () {
 
   /** @type {import('@web3-storage/aggregate-api').AggregateStoreBackend & import('@web3-storage/aggregate-api').AggregateStore} */
   const store = {
-    get: async (commitmentProof) => {
-      return Promise.resolve(items.get(commitmentProof.toString()))
+    get: async (pieceLink) => {
+      return Promise.resolve(items.get(pieceLink.toString()))
     },
-    put: async (commitmentProof, deal) => {
-      const dealEntries = items.get(commitmentProof.toString())
+    put: async (pieceLink, deal) => {
+      const dealEntries = items.get(pieceLink.toString())
       let newEntries
       if (dealEntries) {
         newEntries = [...dealEntries, deal]
-        items.set(commitmentProof.toString(), newEntries)
+        items.set(pieceLink.toString(), newEntries)
       } else {
         newEntries = [deal]
-        items.set(commitmentProof.toString(), newEntries)
+        items.set(pieceLink.toString(), newEntries)
       }
 
       return Promise.resolve()
