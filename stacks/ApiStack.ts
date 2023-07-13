@@ -31,7 +31,8 @@ export function ApiStack({ app, stack }: StackContext) {
     defaults: {
       function: {
         permissions: [
-          offerBucket
+          offerBucket,
+          arrangedOfferTable
         ],
         environment: {
           OFFER_BUCKET_NAME: offerBucket.bucketName,
