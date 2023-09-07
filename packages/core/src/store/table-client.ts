@@ -82,7 +82,7 @@ export function createTableStoreClient <Record, EncodedRecord, EncodedKey> (conf
 
 export interface TableContext <Record, EncodedRecord, EncodedKey> {
   tableName: string
-  encodeRecord: (record: Record) => Promise<EncodedRecord>
+  encodeRecord: (record: Record) => EncodedRecord
   encodeKey: (record: Record) => EncodedKey
-  decodeRecord: (record: EncodedRecord) => Promise<Record>
+  decodeRecord: (record: EncodedRecord) => Record
 }

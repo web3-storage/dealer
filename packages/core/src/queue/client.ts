@@ -31,8 +31,7 @@ export function createQueueClient <Record> (conf: Target, context: QueueContext<
         return { error }
       }
 
-      const messageGroupId = conf instanceof SQSClient ? undefined : options.messageGroupId || '1' // TODO: make required!
-
+      const messageGroupId = conf instanceof SQSClient ? undefined : options.messageGroupId
       const cmd = new SendMessageCommand({
         QueueUrl: context.queueUrl,
         MessageBody: encodedMessage,
@@ -62,5 +61,5 @@ export interface QueueContext <Record> {
   queueUrl: string
   store: Store<Record>
   encodeKey: (record: Record) => string
-  encodeMessage: (record: Record, key: string) => Promise<string>
+  encodeMessage: (record: Record, key: string) => string
 }

@@ -63,13 +63,6 @@ export function ApiStack({ app, stack }: StackContext) {
     }
   })
 
-  // api.bindToRoute('POST /', [
-  //   privateKey,
-  //   ucanLogBasicAuth,
-  //   offerBucket,
-  //   dealTable
-  // ])
-
   stack.addOutputs({
     ApiEndpoint: api.url,
     CustomDomain: customDomain ? `https://${customDomain?.domainName}` : 'Set HOSTED_ZONE in env to deploy to a custom domain'

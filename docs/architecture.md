@@ -52,14 +52,12 @@ interface Offer {
   // CID of all the segments part of the aggregate
   pieces: PieceCID[]
   // identifier of the tenant for the storefront `did:web:web3.storage`
+  // spade relies on tenant naming, so we map it here to tenant
   tenant: string
-  // Label is an arbitrary client chosen label to apply to the deal
-  // @see https://github.com/filecoin-project/go-state-types/blob/ff2ed169ff566458f2acd8b135d62e8ca27e7d0c/builtin/v9/market/deal.go#L201-L221
-  label: string
   // enables ordering of offers to handle.
   // Being it the number of ms since epoch, also means offers that fail and are retried will have "priority"
   // It can also have lower numbers to prioritize certain actors in the future
-  orderId: string
+  orderID: string
 }
 ```
 
@@ -71,9 +69,10 @@ interface Deal {
   aggregate: PieceCID
   // identifier of the storefront `did:web:web3.storage`
   storefront: string
-  // key of the offer stored in `offer-store`
+  // encoded URI with location of the offer, e.g. 's3://${bucket}/${key}'
   offer: string
   // known status of the deal (a secondary index)
+  // Note: DynamoDB does not allow usage of status keyword
   stat: DealStatus
 }
 
@@ -89,4 +88,4 @@ type REJECTED = 2
 
 ## Spade integration
 
-Spade will read new offers available from the `offer-store` once it has availability to process more deals. Thanks to the `orderId` property, it will be able to properly sort and prioritize asked deals.
+Spade will read new offers available from the `offer-store` once it has availability to process more deals. Thanks to the `orderId` property, it will be able to sort submitted deals by desired priority.

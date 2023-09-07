@@ -6,7 +6,7 @@ export async function dealerStore ({
   offerRecord,
   dealStore
 }: DealerStoreContext) {
-  const deal = await offerDecode.message(offerRecord)
+  const deal = offerDecode.message(offerRecord)
 
   return await dealStore.put(deal)
 }

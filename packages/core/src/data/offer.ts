@@ -1,4 +1,4 @@
-import { encode as JSONencode, decode as JSONdecode } from '@ipld/dag-json'
+import * as JSON from '@ipld/dag-json'
 import { fromString } from 'uint8arrays/from-string'
 import { toString } from 'uint8arrays/to-string'
 import { parseLink } from '@ucanto/server'
@@ -15,23 +15,22 @@ export const encode = {
   /**
    * Encode offer data structure from deal to store record.
    */
-  record: function (dealRecord: DealerMessageRecord): Promise<string> {
+  record: function (dealRecord: DealerMessageRecord): string {
     // stored value
     const value = {
       aggregate: dealRecord.aggregate.toString(),
       pieces: dealRecord.pieces.map(p => p.toString()),
-      tenantId: dealRecord.storefront,
-      label: dealRecord.label,
-      orderId: dealRecord.insertedAt || Date.now()
+      tenant: dealRecord.storefront,
+      orderID: dealRecord.insertedAt || Date.now()
     } satisfies Offer
 
-    return Promise.resolve(JSON.stringify(value))
+    return JSON.stringify(value)
   },
   key: createKey,
   /**
    * Encode offer from deal data structure to queue message.
    */
-  message: function (dealRecord: DealerMessageRecord, key: string): Promise<string> {
+  message: function (dealRecord: DealerMessageRecord, key: string): string {
     const deal = {
       aggregate: dealRecord.aggregate,
       stat: 0,
@@ -40,8 +39,8 @@ export const encode = {
       insertedAt: dealRecord.insertedAt
     } satisfies Deal
 
-    const encodedBytes = JSONencode(deal)
-    return Promise.resolve(toString(encodedBytes))
+    const encodedBytes = JSON.encode(deal)
+    return toString(encodedBytes)
   }
 }
 
@@ -49,22 +48,21 @@ export const decode = {
   /**
    * Decode offer data structure from stored record.
    */
-  record: function (storeRecord: EncodedRecord): Promise<DealerMessageRecord> {
+  record: function (storeRecord: EncodedRecord): DealerMessageRecord {
     const record = JSON.parse(storeRecord.value) as Offer
-    return Promise.resolve({
+    return {
       aggregate: parseLink(record.aggregate),
       pieces: record.pieces.map(p => parseLink(p)),
-      storefront: record.tenantId,
-      label: record.label,
-      insertedAt: record.orderId
-    })
+      storefront: record.tenant,
+      insertedAt: record.orderID
+    }
   },
   /**
    * Decode offer data structure from queue message.
    */
-  message: function (messageBody: string): Promise<Deal> {
+  message: function (messageBody: string): Deal {
     const decodedBytes = fromString(messageBody)
-    return Promise.resolve(JSONdecode(decodedBytes))
+    return JSON.decode(decodedBytes)
   }
 }
 
@@ -76,7 +74,6 @@ export type EncodedRecord = {
 export type Offer = {
   aggregate: string
   pieces: string[]
-  tenantId: string
-  label?: string
-  orderId: number
+  tenant: string
+  orderID: number
 }

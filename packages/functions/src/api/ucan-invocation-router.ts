@@ -76,7 +76,12 @@ export async function ucanInvocationRouter(request: APIGatewayProxyEventV2) {
   }, {
     queueUrl: dealerQueueUrl,
     encodeMessage: offerEncode.message,
-    encodeKey: offerEncode.key,
+    encodeKey: (deal) => {
+      const key = offerEncode.key(deal)
+
+      // Encode key with bucket identifier
+      return `s3://${offerBucketName}/${key}`
+    },
     store: offerStore
   })
 

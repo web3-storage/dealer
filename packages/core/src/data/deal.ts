@@ -5,14 +5,14 @@ export const encode = {
   /**
    * Encode data structure to store record and propagate pointer to it.
    */
-  record: function (record: Deal): Promise<EncodedDeal> {
-    return Promise.resolve({
+  record: function (record: Deal): EncodedDeal {
+    return {
       aggregate: record.aggregate.toString(),
       storefront: record.storefront,
-      stat: 0,
+      stat: Status.Offered,
       offer: record.offer,
       insertedAt: record.insertedAt
-    } satisfies EncodedDeal)
+    } satisfies EncodedDeal
   },
   key: function (record: Deal): EncodedKey {
     return {
@@ -25,28 +25,35 @@ export const decode = {
   /**
    * Decode deal data structure from stored record.
    */
-  record: function (storeRecord: EncodedDeal): Promise<Deal> {
-    return Promise.resolve({
+  record: function (storeRecord: EncodedDeal): Deal {
+    return {
       ...storeRecord,
       aggregate: parseLink(storeRecord.aggregate),
-    })
+    }
   }
 }
+
+export enum Status {
+  Offered = 0,
+  Approved = 1,
+  Rejected = 2
+}
+export type UnixTime = number
 
 export type Deal = {
   aggregate: PieceLink
   storefront: string
   offer: string
-  stat: number
-  insertedAt: number
+  stat: Status
+  insertedAt: UnixTime
 }
 
 export type EncodedDeal = {
   aggregate: string
   storefront: string
   offer: string
-  stat: number
-  insertedAt: number
+  stat: Status
+  insertedAt: UnixTime
 }
 
 export type EncodedKey = {

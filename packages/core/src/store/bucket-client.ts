@@ -99,7 +99,7 @@ export type StoreRecord = {
 
 export interface BucketContext<Record, EncodedRecord extends StoreRecord> {
   name: string
-  encodeRecord: (record: Record) => Promise<string>
+  encodeRecord: (record: Record) => string
   encodeKey: (record: Record) => string
-  decodeRecord: (record: EncodedRecord) => Promise<Record>
+  decodeRecord: (record: EncodedRecord) => Record
 }

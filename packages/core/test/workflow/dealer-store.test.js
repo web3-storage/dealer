@@ -30,14 +30,12 @@ test('can store an offer message record into the deal store', async t => {
 
   const { pieces, aggregate } = await randomAggregate(100, 128)
   const storefront = 'did:web:web3.storage'
-  const label = 'label'
   const insertedAt = Date.now()
 
   const offer = {
     aggregate: aggregate.link,
     pieces: pieces.map(p => p.link),
     storefront,
-    label,
     insertedAt
   }
   const offerRecord = await offerEncode.message(offer, aggregate.link.toString())
@@ -53,14 +51,12 @@ test('can store an offer message record into the deal store', async t => {
 test('fails to store an offer message record if store fails', async t => {
   const { pieces, aggregate } = await randomAggregate(100, 128)
   const storefront = 'did:web:web3.storage'
-  const label = 'label'
   const insertedAt = Date.now()
 
   const offer = {
     aggregate: aggregate.link,
     pieces: pieces.map(p => p.link),
     storefront,
-    label,
     insertedAt
   }
   const offerRecord = await offerEncode.message(offer, aggregate.link.toString())
@@ -81,5 +77,5 @@ test('fails to store an offer message record if store fails', async t => {
   })
 
   t.truthy(error)
-  t.falsy(false)
+  t.falsy(ok)
 })
