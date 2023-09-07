@@ -22,8 +22,14 @@ export function DataStack({ stack }: StackContext) {
   /**
    * This table tracks the state of deals offered to a broker.
    */
-  const dealTable = new Table(stack, 'deal-store', {
+  const dealTableName = 'deal-store'
+  const dealTable = new Table(stack, dealTableName, {
     ...dealTableProps,
+  })
+
+  stack.addOutputs({
+    OfferBucketName: offerBucketConfig.bucketName,
+    DealTableName: dealTableName,
   })
 
   return {

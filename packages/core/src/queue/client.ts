@@ -31,11 +31,11 @@ export function createQueueClient <Record> (conf: Target, context: QueueContext<
         return { error }
       }
 
-      const messageGroupId = conf instanceof SQSClient ? undefined : options.messageGroupId
+      let messageGroupId = options.messageGroupId || '1'
       const cmd = new SendMessageCommand({
         QueueUrl: context.queueUrl,
         MessageBody: encodedMessage,
-        MessageGroupId: messageGroupId
+        MessageGroupId: conf instanceof SQSClient ? undefined : messageGroupId
       })
 
       let r
