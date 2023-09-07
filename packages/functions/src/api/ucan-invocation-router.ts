@@ -1,4 +1,6 @@
 import * as Sentry from '@sentry/serverless'
+import { Bucket } from 'sst/node/bucket'
+import { Table } from 'sst/node/table'
 import { Config } from 'sst/node/config'
 import { APIGatewayProxyEventV2 } from 'aws-lambda'
 
@@ -6,28 +8,35 @@ import * as Server from '@ucanto/server'
 import * as CAR from '@ucanto/transport/car'
 import { API } from '@ucanto/core'
 
-import { connect as ucanLogConnect } from '@spade-proxy/core/ucan-log'
-import { createOfferStore } from '@spade-proxy/core/buckets/offer-store'
-import { createAggregateStore } from '@spade-proxy/core/tables/aggregate-store'
-import { createArrangedOfferStore } from '@spade-proxy/core/tables/arranged-offer-store'
-import { createUcantoServer, getServiceSigner } from '@spade-proxy/core/service'
+import { connect as ucanLogConnect } from '@dealer/core/src/ucan-log'
+import { createQueueClient } from '@dealer/core/src/queue/client'
+import { createBucketStoreClient } from '@dealer/core/src/store/bucket-client'
+import { createTableStoreClient } from '@dealer/core/src/store/table-client'
+import { createUcantoServer, getServiceSigner } from '@dealer/core/src/service'
+import { encode as offerEncode, decode as offerDecode } from '@dealer/core/src/data/offer'
+import { encode as dealEncode, decode as dealDecode } from '@dealer/core/src/data/deal'
+
+import { mustGetEnv } from '../utils'
 
 Sentry.AWSLambda.init({
   environment: process.env.SST_STAGE,
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1.0,
 })
-const AWS_REGION = process.env.AWS_REGION || 'us-west-2'
 
 export async function ucanInvocationRouter(request: APIGatewayProxyEventV2) {
   const {
-    OFFER_BUCKET_NAME: offerBucketName = '',
-    ARRANGED_OFFER_TABLE_NAME: arrangedOfferTableName = '',
-    SPADE_PROXY_DID,
-    UCAN_LOG_URL,
-  } = process.env
+    did,
+    ucanLogUrl,
+    dealTableName,
+    dealTableRegion,
+    offerBucketName,
+    offerBucketRegion,
+    dealerQueueUrl,
+    dealerQueueRegion,
+  } = getLambdaEnv()
 
-  if (!SPADE_PROXY_DID) {
+  if (!did) {
     return {
       statusCode: 500,
     }
@@ -37,19 +46,49 @@ export async function ucanInvocationRouter(request: APIGatewayProxyEventV2) {
     }
   }
 
-  const { PRIVATE_KEY, UCAN_LOG_BASIC_AUTH } = Config
+  const { PRIVATE_KEY: privateKey, UCAN_LOG_BASIC_AUTH } = Config
 
   const ucanLog = ucanLogConnect({
-    url: new URL(UCAN_LOG_URL || ''),
+    url: new URL(ucanLogUrl || ''),
     auth: UCAN_LOG_BASIC_AUTH
   })
-  const serviceSigner = getServiceSigner({ SPADE_PROXY_DID, PRIVATE_KEY })
-  const arrangedOfferStore = createArrangedOfferStore(AWS_REGION, arrangedOfferTableName)
+
+  // context
+  const serviceSigner = getServiceSigner({ did, privateKey })
+  const offerStore = createBucketStoreClient({
+    region: offerBucketRegion
+  }, {
+    name: offerBucketName,
+    encodeRecord: offerEncode.record,
+    encodeKey: offerEncode.key,
+    decodeRecord: offerDecode.record,
+  })
+  const dealStore = createTableStoreClient({
+    region: dealTableRegion
+  }, {
+    tableName: dealTableName,
+    encodeRecord: dealEncode.record,
+    encodeKey: dealEncode.key,
+    decodeRecord: dealDecode.record
+  })
+  const addQueue = createQueueClient({
+    region: dealerQueueRegion
+  }, {
+    queueUrl: dealerQueueUrl,
+    encodeMessage: offerEncode.message,
+    encodeKey: (deal) => {
+      const key = offerEncode.key(deal)
+
+      // Encode key with bucket identifier
+      return `s3://${offerBucketName}/${key}`
+    },
+    store: offerStore
+  })
 
   const server = createUcantoServer(serviceSigner, {
-    aggregateStore: createAggregateStore(),
-    offerStore: createOfferStore(AWS_REGION, offerBucketName, arrangedOfferStore),
-    arrangedOfferStore
+    dealStore,
+    addQueue,
+    id: serviceSigner
   }, {
     catch: (/** @type {string | Error} */ err) => {
       console.warn(err)
@@ -91,6 +130,19 @@ export async function ucanInvocationRouter(request: APIGatewayProxyEventV2) {
 
 export const handler = Sentry.AWSLambda.wrapHandler(ucanInvocationRouter)
 
+function getLambdaEnv () {
+  return {
+    did: mustGetEnv('DID'),
+    ucanLogUrl: mustGetEnv('UCAN_LOG_URL'),
+    dealTableName: Table['deal-store'].tableName,
+    dealTableRegion: mustGetEnv('AWS_REGION'),
+    offerBucketName: mustGetEnv('OFFER_STORE_BUCKET_NAME'),
+    offerBucketRegion: mustGetEnv('AWS_REGION'),
+    dealerQueueUrl: mustGetEnv('DEALER_QUEUE_URL'),
+    dealerQueueRegion: mustGetEnv('DEALER_QUEUE_REGION')
+  }
+}
+
 export function toLambdaResponse({ status = 200, headers, body }: API.HTTPResponse) {
   return {
     statusCode: status,
@@ -114,5 +166,13 @@ declare module 'sst/node/config' {
     UCAN_LOG_BASIC_AUTH: {
       value: string
     }
+  }
+}
+
+declare module 'sst/node/table' {
+  export interface TableResources {
+    'deal-store': {
+      tableName: string;
+    };
   }
 }

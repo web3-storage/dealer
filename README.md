@@ -1,6 +1,6 @@
-# spade-proxy
+# dealer
 
-> A proxy API which will provide the UCAN server for receiving `aggregate/*` invocations and other resources for Spade to scrape - a way to retrieve the list of aggregates ready for a deal.
+> Implementation of w3filecoin dealer service which will provide the UCAN server for receiving `dealer/*` invocations and other resources for Spade to scrape - a way to retrieve the list of aggregates ready for a deal.
 
 ## Getting Started
 
@@ -69,11 +69,11 @@ Ensure the following variables are set in the env when deploying
 
 #### `HOSTED_ZONE`
 
-The root domain to deploy the API to. e.g `spade-proxy.web3.storage`. The value should match a hosted zone configured in route53 that your aws account has access to.
+The root domain to deploy the API to. e.g `dealer.web3.storage`. The value should match a hosted zone configured in route53 that your aws account has access to.
 
-#### `SPADE_PROXY_DID`
+#### `DID`
 
-[DID](https://www.w3.org/TR/did-core/) of the ucanto server. e.g. `did:web:spade.storage`. Optional: if omitted, a `did:key` will be derrived from `PRIVATE_KEY`
+[DID](https://www.w3.org/TR/did-core/) of the ucanto server. e.g. `did:web:dealer.web3.storage`. Optional: if omitted, a `did:key` will be derrived from `PRIVATE_KEY`
 
 ### Secrets
 

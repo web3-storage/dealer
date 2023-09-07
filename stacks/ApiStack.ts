@@ -6,6 +6,7 @@ import {
 } from 'sst/constructs';
 
 import { DataStack } from './DataStack';
+import { ProcessorStack } from './ProcessorStack';
 import {
   getApiPackageJson,
   getCustomDomain,
@@ -14,7 +15,8 @@ import {
 } from './config';
 
 export function ApiStack({ app, stack }: StackContext) {
-  const { offerBucket, arrangedOfferTable } = use(DataStack)
+  const { offerBucket, dealTable } = use(DataStack)
+  const { dealerQueue } = use(ProcessorStack)
 
   // Setup app monitoring with Sentry
   setupSentry(app, stack)
@@ -32,21 +34,25 @@ export function ApiStack({ app, stack }: StackContext) {
       function: {
         permissions: [
           offerBucket,
-          arrangedOfferTable
+          dealTable,
+          dealerQueue
         ],
         environment: {
-          OFFER_BUCKET_NAME: offerBucket.bucketName,
-          ARRANGED_OFFER_TABLE_NAME: arrangedOfferTable.tableName,
           NAME: pkg.name,
           VERSION: pkg.version,
           COMMIT: git.commmit,
           STAGE: stack.stage,
-          SPADE_PROXY_DID: process.env.SPADE_PROXY_DID ?? '',
+          DID: process.env.DID ?? '',
           UCAN_LOG_URL: process.env.UCAN_LOG_URL ?? '',
+          DEALER_QUEUE_URL: dealerQueue.queueUrl,
+          DEALER_QUEUE_REGION: stack.region,
+          OFFER_STORE_BUCKET_NAME: offerBucket.bucketName
         },
         bind: [
           privateKey,
-          ucanLogBasicAuth
+          ucanLogBasicAuth,
+          offerBucket,
+          dealTable
         ]
       }
     },

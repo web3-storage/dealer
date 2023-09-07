@@ -1,5 +1,5 @@
 {
-  "name": "@spade-proxy/functions",
+  "name": "@dealer/functions",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -7,7 +7,7 @@
     "typecheck": "tsc --build"
   },
   "dependencies": {
-    "@spade-proxy/core": "*",
+    "@dealer/core": "*",
     "@ucanto/server": "^8.0.0",
     "@ucanto/transport": "^8.0.0"
   },

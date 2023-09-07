@@ -4,28 +4,30 @@ import {
   StackContext
 } from 'sst/constructs';
 
-import { arrangedOfferTableProps } from '../packages/core/tables/index'
-
+import { dealTableProps } from '../packages/core/src/store/index';
 import { getBucketConfig } from './config';
 
 export function DataStack({ stack }: StackContext) {
-  const bucket = getBucketConfig('offer-store', stack.stage)
-  const offerBucket = new Bucket(stack, bucket.bucketName, {
+  /**
+   * This bucket contains the information of each deal offer received by storefronts.
+   */
+  const offerBucketConfig = getBucketConfig('offer-store', stack.stage)
+  const offerBucket = new Bucket(stack, offerBucketConfig.bucketName, {
     cors: true,
     cdk: {
-      bucket
+      bucket: offerBucketConfig
     }
   })
 
   /**
-   * This table tracks CARs pending a Filecoin deal together with their metadata.
+   * This table tracks the state of deals offered to a broker.
    */
-  const arrangedOfferTable = new Table(stack, 'arranged-offer', {
-    ...arrangedOfferTableProps,
+  const dealTable = new Table(stack, 'deal-store', {
+    ...dealTableProps,
   })
 
   return {
     offerBucket,
-    arrangedOfferTable
+    dealTable
   }
 }

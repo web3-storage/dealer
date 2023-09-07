@@ -2,6 +2,7 @@ import { DynamoDBClient, CreateTableCommand } from '@aws-sdk/client-dynamodb'
 import { customAlphabet } from 'nanoid'
 import { GenericContainer as Container } from 'testcontainers'
 import { S3Client, CreateBucketCommand } from '@aws-sdk/client-s3'
+import { SQSClient, CreateQueueCommand } from '@aws-sdk/client-sqs'
 
 /**
  * @param {object} [opts]
@@ -143,4 +144,40 @@ function toKeySchema ({partitionKey, sortKey}) {
     )
   }
   return KeySchema
+}
+
+/**
+ * @param {object} [opts]
+ * @param {number} [opts.port]
+ * @param {string} [opts.region]
+ */
+export async function createQueue(opts = {}) {
+  const region = opts.region || 'us-west-2'
+  const port = opts.port || 9324
+
+  const queue = await new Container('softwaremill/elasticmq')
+    .withExposedPorts(port)
+    .start()
+
+  const endpoint = `http://${queue.getHost()}:${queue.getMappedPort(port)}`
+  const client = new SQSClient({
+    region,
+    endpoint
+  })
+  const accountId = '000000000000'
+  const id = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10)
+  const QueueName = id()
+
+  await client.send(new CreateQueueCommand({
+    QueueName,
+    Attributes: {
+      FifoQueue: `${QueueName}.fifo`,
+    }
+  }))
+
+  return {
+    client,
+    queueName: QueueName,
+    queueUrl: `${endpoint}/${accountId}/${QueueName}`
+  }
 }
