@@ -6,7 +6,7 @@ import pRetry from 'p-retry'
  * @param {string} bucketName
  * @param {string} key
  */
-export async function getBucketItem (client, bucketName, key) {
+export async function waitForBucketItem (client, bucketName, key) {
   const cmd = new GetObjectCommand({
     Bucket: bucketName,
     Key: key
@@ -17,12 +17,9 @@ export async function getBucketItem (client, bucketName, key) {
     try {
       r = await client.send(cmd)
     } catch (err) {
-      console.log('bucket error', err)
-    }
-
-    if (r?.$metadata.httpStatusCode !== 200) {
-      console.log('bucket error', r?.$metadata.httpStatusCode)
-      throw new Error('not found')
+      if (err?.$metadata?.httpStatusCode === 404) {
+        throw new Error('not found')
+      }
     }
 
     return r
@@ -32,5 +29,5 @@ export async function getBucketItem (client, bucketName, key) {
     minTimeout: 1000
   })
   
-  return await response.Body?.transformToByteArray()
+  return await response?.Body?.transformToByteArray()
 }

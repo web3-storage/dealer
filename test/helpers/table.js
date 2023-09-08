@@ -7,7 +7,7 @@ import pRetry from 'p-retry'
  * @param {string} tableName
  * @param {object} key
  */
-export async function getTableItem (dynamo, tableName, key) {
+export async function waitForTableItem (dynamo, tableName, key) {
   const cmd = new GetItemCommand({
     TableName: tableName,
     Key: marshall(key)
@@ -15,13 +15,11 @@ export async function getTableItem (dynamo, tableName, key) {
 
   const response = await pRetry(async () => {
     const r = await dynamo.send(cmd)
-    if (r.$metadata.httpStatusCode !== 200 || !r.Item) {
-      console.log('not found in dynamo yet')
-      throw new Error('not found')
+    if (r.$metadata.httpStatusCode === 404) {
+      throw new Error('not found in dynamoDB yet')
     }
     return r
   }, {
-    retries: 5,
     maxTimeout: 1000,
     minTimeout: 500
   })

@@ -1,21 +1,21 @@
 import { test } from './helpers/context.js'
 
 import git from 'git-rev-sync'
-import pWaitFor from 'p-wait-for'
 import delay from 'delay'
 import { toString } from 'uint8arrays/to-string'
 import { Dealer } from '@web3-storage/filecoin-client'
 import { randomAggregate } from '@web3-storage/filecoin-api/test'
 
 import { getDealerClientConfig } from './helpers/dealer-client.js'
-import { getTableItem } from './helpers/table.js'
-import { getBucketItem } from './helpers/bucket.js'
+import { waitForTableItem } from './helpers/table.js'
+import { waitForBucketItem } from './helpers/bucket.js'
 import {
   getApiEndpoint,
   getStage,
   getDealStoreDynamoDb,
   getOfferStoreBucketInfo
 } from './helpers/deployment.js'
+import pRetry from 'p-retry'
 
 test.before(t => {
   t.context = {
@@ -62,27 +62,20 @@ test('POST /', async t => {
   // wait for deal-store entry to exist given it is propagated with a queue message
   await delay(5_000)
 
-  console.log('try get deal entry...')
   /** @type {import('../packages/core/src/data/deal.js').EncodedDeal | undefined} */
-  let dealEntry
-  await pWaitFor(async () => {
-    // @ts-expect-error does not automatically infer
-    dealEntry = await getTableItem(
-      t.context.dealStoreDynamo.client,
-      t.context.dealStoreDynamo.tableName,
-      { aggregate: res.out.ok?.aggregate?.toString() }
-    )
-
-    console.log('dealEntry found', Boolean(dealEntry))
-    return Boolean(dealEntry)
-  }, {
-    interval: 1_000,
-    timeout: 10_000
+  // @ts-expect-error does not automatically infer
+  const dealEntry = await pRetry(async () => waitForTableItem(
+    t.context.dealStoreDynamo.client,
+    t.context.dealStoreDynamo.tableName,
+    { aggregate: res.out.ok?.aggregate?.toString() }
+  ), {
+    // wait for deal-store entry to exist given it is propagated with a queue message
+    minTimeout: 1_000,
+    maxTimeout: 2_000
   })
   if (!dealEntry) {
     throw new Error('deal store item was not found')
   }
-
   t.is(dealEntry.aggregate, aggregate.link.link().toString())
   t.is(dealEntry.storefront, invocationConfig.with)
   t.is(dealEntry.stat, 0)
@@ -93,7 +86,7 @@ test('POST /', async t => {
   // remove bucket encoding
   const bucketKey = dealEntry.offer.replace('s3://', '').replace(`${t.context.offerStoreBucket.bucket}/`, '')
   console.log('try to get bucket item...', bucketKey)
-  const bucketItem = await getBucketItem(
+  const bucketItem = await waitForBucketItem(
     t.context.offerStoreBucket.client,
     t.context.offerStoreBucket.bucket,
     bucketKey
