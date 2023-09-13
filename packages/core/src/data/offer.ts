@@ -8,7 +8,7 @@ import { Deal } from './deal'
 
 // key in format of `YYYY-MM-DDTHH:MM:SS `${commitmentProof}``
 function createKey (deal: DealerMessageRecord) {
-  return `${(new Date()).toISOString()} ${deal.aggregate.toString()}.json`
+  return `${(new Date(deal.insertedAt)).toISOString()} ${deal.aggregate.toString()}.json`
 }
 
 export const encode = {
