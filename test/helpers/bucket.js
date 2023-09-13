@@ -24,7 +24,7 @@ export async function pollBucketItem (client, bucketName, key) {
 
     return r
   }, {
-    retries: 10,
+    retries: 100,
     maxTimeout: 1000,
     minTimeout: 1000
   })
