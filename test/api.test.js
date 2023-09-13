@@ -7,8 +7,8 @@ import { Dealer } from '@web3-storage/filecoin-client'
 import { randomAggregate } from '@web3-storage/filecoin-api/test'
 
 import { getDealerClientConfig } from './helpers/dealer-client.js'
-import { waitForTableItem } from './helpers/table.js'
-import { waitForBucketItem } from './helpers/bucket.js'
+import { pollTableItem } from './helpers/table.js'
+import { pollBucketItem } from './helpers/bucket.js'
 import {
   getApiEndpoint,
   getStage,
@@ -64,15 +64,11 @@ test('POST /', async t => {
 
   /** @type {import('../packages/core/src/data/deal.js').EncodedDeal | undefined} */
   // @ts-expect-error does not automatically infer
-  const dealEntry = await pRetry(async () => waitForTableItem(
+  const dealEntry = await pollTableItem(
     t.context.dealStoreDynamo.client,
     t.context.dealStoreDynamo.tableName,
     { aggregate: res.out.ok?.aggregate?.toString() }
-  ), {
-    // wait for deal-store entry to exist given it is propagated with a queue message
-    minTimeout: 1_000,
-    maxTimeout: 2_000
-  })
+  )
   if (!dealEntry) {
     throw new Error('deal store item was not found')
   }
@@ -86,7 +82,7 @@ test('POST /', async t => {
   // remove bucket encoding
   const bucketKey = dealEntry.offer.replace('s3://', '').replace(`${t.context.offerStoreBucket.bucket}/`, '')
   console.log('try to get bucket item...', bucketKey)
-  const bucketItem = await waitForBucketItem(
+  const bucketItem = await pollBucketItem(
     t.context.offerStoreBucket.client,
     t.context.offerStoreBucket.bucket,
     bucketKey

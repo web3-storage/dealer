@@ -7,7 +7,7 @@ import pRetry from 'p-retry'
  * @param {string} tableName
  * @param {object} key
  */
-export async function waitForTableItem (dynamo, tableName, key) {
+export async function pollTableItem (dynamo, tableName, key) {
   const cmd = new GetItemCommand({
     TableName: tableName,
     Key: marshall(key)
@@ -20,8 +20,9 @@ export async function waitForTableItem (dynamo, tableName, key) {
     }
     return r
   }, {
-    maxTimeout: 1000,
-    minTimeout: 500
+    maxTimeout: 1500,
+    minTimeout: 1000,
+    retries: 100
   })
 
   return response.Item && unmarshall(response.Item)

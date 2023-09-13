@@ -4,6 +4,8 @@ import { Queue, Store } from '@web3-storage/filecoin-api/types'
 
 import { connectQueue, Target } from './index.js'
 
+const IMPLICIT_MESSAGE_GROUP_ID = '1'
+
 export function createQueueClient <Record> (conf: Target, context: QueueContext<Record>): Queue<Record> {
   const queueClient = connectQueue(conf)
   return {
@@ -31,10 +33,12 @@ export function createQueueClient <Record> (conf: Target, context: QueueContext<
         return { error }
       }
 
-      let messageGroupId = options.messageGroupId || '1'
+      let messageGroupId = options.messageGroupId || IMPLICIT_MESSAGE_GROUP_ID
       const cmd = new SendMessageCommand({
         QueueUrl: context.queueUrl,
         MessageBody: encodedMessage,
+        // If SQS Client was provided, we are in testing mode, and we cannot provide message group ID
+        // given resource used does not support FIFO Queues with it.
         MessageGroupId: conf instanceof SQSClient ? undefined : messageGroupId
       })
 

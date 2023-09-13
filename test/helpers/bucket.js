@@ -6,7 +6,7 @@ import pRetry from 'p-retry'
  * @param {string} bucketName
  * @param {string} key
  */
-export async function waitForBucketItem (client, bucketName, key) {
+export async function pollBucketItem (client, bucketName, key) {
   const cmd = new GetObjectCommand({
     Bucket: bucketName,
     Key: key
