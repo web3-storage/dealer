@@ -51,9 +51,9 @@ interface Offer {
   aggregate: PieceCID
   // CID of all the segments part of the aggregate
   pieces: PieceCID[]
-  // identifier of the tenant for the storefront `did:web:web3.storage`
-  // spade relies on tenant naming, so we map it here to tenant
-  tenant: string
+  // identifier of the collection for the tenant `did:web:web3.storage`
+  // spade relies on collections to identify different replication constraints.
+  collection: string
   // enables ordering of offers to handle.
   // Being it the number of ms since epoch, also means offers that fail and are retried will have "priority"
   // It can also have lower numbers to prioritize certain actors in the future

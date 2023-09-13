@@ -20,7 +20,7 @@ export const encode = {
     const value = {
       aggregate: dealRecord.aggregate.toString(),
       pieces: dealRecord.pieces.map(p => p.toString()),
-      tenant: dealRecord.storefront,
+      collection: dealRecord.storefront,
       orderID: dealRecord.insertedAt || Date.now()
     } satisfies Offer
 
@@ -53,7 +53,7 @@ export const decode = {
     return {
       aggregate: parseLink(record.aggregate),
       pieces: record.pieces.map(p => parseLink(p)),
-      storefront: record.tenant,
+      storefront: record.collection,
       insertedAt: record.orderID
     }
   },
@@ -74,6 +74,6 @@ export type EncodedRecord = {
 export type Offer = {
   aggregate: string
   pieces: string[]
-  tenant: string
+  collection: string
   orderID: number
 }
