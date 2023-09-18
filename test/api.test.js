@@ -94,7 +94,7 @@ test('POST /', async t => {
   const encodedOffer = JSON.parse(toString(bucketItem))
 
   t.is(encodedOffer.aggregate, aggregate.link.link().toString())
-  t.is(encodedOffer.tenant, invocationConfig.with)
+  t.is(encodedOffer.collection, invocationConfig.with)
   t.truthy(encodedOffer.orderID)
   t.deepEqual(encodedOffer.pieces, offer.map(o => o.toString()))
 })
