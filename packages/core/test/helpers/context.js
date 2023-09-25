@@ -17,7 +17,7 @@ import anyTest from 'ava'
  * 
  * @typedef {import("ava").TestFn<any>} Test
  * @typedef {import("ava").TestFn<S3Context & DbContext & QueueContext>} TestService
- * @typedef {import("ava").TestFn<DbContext>} TestWorkflow
+ * @typedef {import("ava").TestFn<S3Context & DbContext>} TestWorkflow
  */
 
 // eslint-disable-next-line unicorn/prefer-export-from

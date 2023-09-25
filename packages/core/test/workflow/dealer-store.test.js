@@ -38,7 +38,7 @@ test('can store an offer message record into the deal store', async t => {
     storefront,
     insertedAt
   }
-  const offerRecord = await offerEncode.message(offer, aggregate.link.toString())
+  const offerRecord = offerEncode.message(offer, aggregate.link.toString())
   const { ok, error } = await dealerStore({
     offerRecord,
     dealStore

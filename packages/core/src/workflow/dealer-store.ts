@@ -1,4 +1,4 @@
-import { Store, DealerRecord } from '@web3-storage/filecoin-api/types'
+import { Store } from '@web3-storage/filecoin-api/types'
 import { Deal } from '../data/deal.js'
 import { decode as offerDecode } from '../data/offer.js'
 

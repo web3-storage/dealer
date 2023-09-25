@@ -45,6 +45,9 @@ importers:
       '@ucanto/transport':
         specifier: 8.0.0
         version: 8.0.0
+      '@web3-storage/data-segment':
+        specifier: ^3.0.1
+        version: 3.0.1
       '@web3-storage/filecoin-api':
         specifier: ^1.4.3
         version: 1.4.3
@@ -108,6 +111,9 @@ importers:
       '@ipld/dag-ucan':
         specifier: 3.3.2
         version: 3.3.2
+      '@ucanto/client':
+        specifier: ^8.0.1
+        version: 8.0.1
       '@ucanto/interface':
         specifier: ^8.0.0
         version: 8.0.0
@@ -154,6 +160,9 @@ importers:
       nanoid:
         specifier: ^4.0.2
         version: 4.0.2
+      p-defer:
+        specifier: ^4.0.0
+        version: 4.0.0
       p-wait-for:
         specifier: ^5.0.2
         version: 5.0.2
@@ -181,6 +190,9 @@ importers:
       '@ucanto/transport':
         specifier: ^8.0.0
         version: 8.0.0
+      uint8arrays:
+        specifier: 4.0.6
+        version: 4.0.6
     devDependencies:
       '@sentry/serverless':
         specifier: 7.52.1
@@ -2990,6 +3002,13 @@ packages:
       '@ucanto/core': 8.1.0
       '@ucanto/interface': 8.0.0
 
+  /@ucanto/client@8.0.1:
+    resolution: {integrity: sha512-2FQmoGFZa/I23sgeMinNZoPs7VwueNksbxT6+/wTm5VjWHcGCSR5QIJo++z3TfqgWxDpx7UOEucrS2y4DE0jOw==}
+    dependencies:
+      '@ucanto/core': 8.1.0
+      '@ucanto/interface': 8.0.0
+    dev: false
+
   /@ucanto/core@8.0.0:
     resolution: {integrity: sha512-Ne45bH0uUhAexNkJWj8tYsvKut58LaL3rsu30vxVh+ybkj47nD02mY8KqW+vCHY80E1ubPcjlHuCt0+efR9bgw==}
     dependencies:
@@ -5661,6 +5680,11 @@ packages:
   /p-defer@1.0.0:
     resolution: {integrity: sha512-wB3wfAxZpk2AzOfUMJNL+d36xothRSyj8EXOa4f6GMqYDN9BJaaSISbsk+wS9abmnebVw95C2Kb5t85UmpCxuw==}
     engines: {node: '>=4'}
+    dev: true
+
+  /p-defer@4.0.0:
+    resolution: {integrity: sha512-Vb3QRvQ0Y5XnF40ZUWW7JfLogicVh/EnA5gBIvKDJoYpeI82+1E3AlB9yOcKFS0AhHrWVnAQO39fbR0G99IVEQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /p-event@5.0.1:

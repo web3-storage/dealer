@@ -21,7 +21,7 @@ export function createQueueClient <Record> (conf: Target, context: QueueContext<
 
       let encodedMessage: string
       try {
-        encodedMessage = await context.encodeMessage(record, encodedKey)
+        encodedMessage = context.encodeMessage(record, encodedKey)
       } catch (error: any) {
         return {
           error: new EncodeRecordFailed(error.message)
