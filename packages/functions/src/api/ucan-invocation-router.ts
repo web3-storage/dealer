@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/serverless'
-import { Bucket } from 'sst/node/bucket'
 import { Table } from 'sst/node/table'
 import { Config } from 'sst/node/config'
 import { APIGatewayProxyEventV2 } from 'aws-lambda'

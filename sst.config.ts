@@ -3,6 +3,7 @@ import { SSTConfig } from 'sst';
 import { ApiStack } from './stacks/ApiStack';
 import { DataStack } from './stacks/DataStack';
 import { ProcessorStack } from './stacks/ProcessorStack';
+import { CronStack } from './stacks/CronStack';
 
 export default {
   config(_input) {
@@ -25,6 +26,7 @@ export default {
     app.stack(DataStack);
     app.stack(ProcessorStack);
     app.stack(ApiStack);
+    app.stack(CronStack);
 
     // tags let us discover all the aws resource costs incurred by this app
     // see: https://docs.sst.dev/advanced/tagging-resources

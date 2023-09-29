@@ -78,9 +78,14 @@ export function setupSentry (app: import('sst/constructs').App, stack: import('s
 /**
  * Get Env validating it is set.
  */
- function getEnv() {
+ export function getEnv() {
   return {
     SENTRY_DSN: mustGetEnv('SENTRY_DSN'),
+    DID: mustGetEnv('DID'),
+    UCAN_LOG_URL: mustGetEnv('UCAN_LOG_URL'),
+    DEAL_TRACKER_DID: process.env.DEAL_TRACKER_DID ?? '', // TODO: mustGetEnv
+    DEAL_TRACKER_URL: process.env.DEAL_TRACKER_URL ?? '', // TODO: mustGetEnv
+    DEAL_TRACKER_PROOF: process.env.DEAL_TRACKER_PROOF ?? '',
   }
 }
 

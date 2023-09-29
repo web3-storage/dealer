@@ -11,21 +11,23 @@ import {
   getApiPackageJson,
   getCustomDomain,
   getGitInfo,
+  getEnv,
   setupSentry
 } from './config';
 
 export function ApiStack({ app, stack }: StackContext) {
-  const { offerBucket, dealTable } = use(DataStack)
-  const { dealerQueue } = use(ProcessorStack)
-
   // Setup app monitoring with Sentry
   setupSentry(app, stack)
+
+  const { DID, UCAN_LOG_URL } = getEnv()
+
+  const { privateKey, offerBucket, dealTable } = use(DataStack)
+  const { dealerQueue } = use(ProcessorStack)
   
   // Setup API
   const customDomain = getCustomDomain(stack.stage, process.env.HOSTED_ZONE)
   const pkg = getApiPackageJson()
   const git = getGitInfo()
-  const privateKey = new Config.Secret(stack, 'PRIVATE_KEY')
   const ucanLogBasicAuth = new Config.Secret(stack, 'UCAN_LOG_BASIC_AUTH')
 
   const api = new Api(stack, 'api', {
@@ -42,8 +44,8 @@ export function ApiStack({ app, stack }: StackContext) {
           VERSION: pkg.version,
           COMMIT: git.commmit,
           STAGE: stack.stage,
-          DID: process.env.DID ?? '',
-          UCAN_LOG_URL: process.env.UCAN_LOG_URL ?? '',
+          DID,
+          UCAN_LOG_URL,
           DEALER_QUEUE_URL: dealerQueue.queueUrl,
           DEALER_QUEUE_REGION: stack.region,
           OFFER_STORE_BUCKET_NAME: offerBucket.bucketName

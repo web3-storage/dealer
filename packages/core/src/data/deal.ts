@@ -40,6 +40,7 @@ export enum Status {
 }
 export type UnixTime = number
 
+// todo: proof
 export type Deal = {
   aggregate: PieceLink
   storefront: string
